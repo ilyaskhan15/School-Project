@@ -36,11 +36,13 @@ ALLOWED_HOSTS = []
 
 
 # Application definition
-AUTH_USER_MODEL = 'SMS.User'
+AUTH_USER_MODEL = 'accounts.User'
 
 
 INSTALLED_APPS = [
-    'SMS',
+    'accounts',
+    'teachers',
+    'students',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
