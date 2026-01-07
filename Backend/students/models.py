@@ -9,6 +9,7 @@ class Student(models.Model):
     gpa = models.DecimalField(max_digits=4, decimal_places=2, null=True, blank=True)
     credits = models.DecimalField(max_digits=5, decimal_places=2, null=True, blank=True)
     class_level = models.CharField(max_length=255)
+    expected_graduation = models.DateField(null=True, blank=True)
     
     class Meta:
         db_table = 'app_students'
