@@ -9,6 +9,7 @@ mysqlclient = "*"
 python-decouple = "*"
 pillow = "*"
 djangorestframework = "*"
+django-bootstrap-v5 = "*"
 
 [dev-packages]
 

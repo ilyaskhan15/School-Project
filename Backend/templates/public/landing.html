@@ -1,0 +1,569 @@
+<!-- templates/public/landing.html -->
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}School Management System - Modern Platform for Schools{% endblock %}
+
+{% block meta %}
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+<meta name="description"
+    content="Modern school management system for students, teachers, and administrators. Streamline operations with our comprehensive platform.">
+<meta name="keywords"
+    content="school management, student portal, teacher portal, attendance system, educational software">
+{% endblock %}
+
+{% block extra_css %}
+<!-- Animate.css and AOS CSS -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet">
+<style>
+    /* Mobile-first responsive styles */
+    :root {
+        --primary-color: #4361ee;
+        --secondary-color: #3a0ca3;
+        --light-color: #f8f9fa;
+        --dark-color: #212529;
+    }
+
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+        line-height: 1.6;
+        color: var(--dark-color);
+        overflow-x: hidden;
+    }
+
+    /* Responsive typography */
+    h1.display-4 {
+        font-size: clamp(2rem, 5vw, 3.5rem);
+        line-height: 1.2;
+    }
+
+    .lead {
+        font-size: clamp(1rem, 2.5vw, 1.25rem);
+    }
+
+    /* Responsive containers */
+    .container-fluid {
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+
+    @media (min-width: 768px) {
+        .container-fluid {
+            padding-left: 30px;
+            padding-right: 30px;
+        }
+    }
+
+    @media (min-width: 1200px) {
+        .container-fluid {
+            padding-left: 50px;
+            padding-right: 50px;
+        }
+    }
+
+    /* Hero section responsive */
+    .hero-section {
+        padding: 80px 0;
+        background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+        min-height: 90vh;
+        display: flex;
+        align-items: center;
+    }
+
+    @media (max-width: 768px) {
+        .hero-section {
+            padding: 60px 0;
+            min-height: auto;
+            text-align: center;
+        }
+
+        .hero-section .row {
+            flex-direction: column-reverse;
+        }
+    }
+
+    /* Responsive buttons */
+    .btn-responsive {
+        padding: 12px 24px;
+        font-size: 1rem;
+        width: 100%;
+        max-width: 300px;
+    }
+
+    @media (min-width: 576px) {
+        .btn-responsive {
+            width: auto;
+        }
+    }
+
+    /* Feature cards responsive */
+    .feature-card {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        margin-bottom: 1.5rem;
+        height: 100%;
+    }
+
+    .feature-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    }
+
+    .feature-icon {
+        font-size: clamp(2rem, 5vw, 3rem);
+        margin-bottom: 1rem;
+    }
+
+    /* Responsive grid adjustments */
+    @media (max-width: 576px) {
+        .mobile-center {
+            text-align: center;
+        }
+
+        .mobile-mb-3 {
+            margin-bottom: 1rem;
+        }
+
+        .mobile-full-width {
+            width: 100%;
+        }
+    }
+
+    /* Touch-friendly elements */
+    .btn,
+    .nav-link,
+    .card {
+        -webkit-tap-highlight-color: transparent;
+    }
+
+    /* Better spacing for mobile */
+    .section-padding {
+        padding: 60px 0;
+    }
+
+    @media (max-width: 768px) {
+        .section-padding {
+            padding: 40px 0;
+        }
+    }
+
+    /* Responsive images */
+    .img-fluid {
+        max-width: 100%;
+        height: auto;
+    }
+
+    /* Responsive navigation */
+    .navbar-collapse {
+        transition: all 0.3s ease;
+    }
+
+    /* Loading optimization */
+    img {
+        max-width: 100%;
+        height: auto;
+        display: block;
+    }
+
+    /* Accessibility improvements */
+    :focus {
+        outline: 2px solid var(--primary-color);
+        outline-offset: 2px;
+    }
+
+    /* Dark mode support */
+    @media (prefers-color-scheme: dark) {
+        body {
+            background-color: #121212;
+            color: #ffffff;
+        }
+
+        .card {
+            background-color: #1e1e1e;
+            border-color: #333;
+        }
+
+        .bg-light {
+            background-color: #2d2d2d !important;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block navbar %}
+<!-- Responsive Navigation -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top shadow-lg"
+    style="background: linear-gradient(135deg, #4361ee 0%, #3a0ca3 100%) !important;">
+    <div class="container-fluid">
+        <a class="navbar-brand d-flex align-items-center fw-bold" href="/">
+            <i class="bi bi-book-half me-2"></i>
+            <span class="d-none d-sm-inline">EduManage Pro</span>
+            <span class="d-inline d-sm-none">EMP</span>
+        </a>
+
+        <!-- Mobile menu button -->
+        <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMain"
+            aria-controls="navbarMain" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <!-- Navigation links -->
+        <div class="collapse navbar-collapse" id="navbarMain">
+            <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                <li class="nav-item mx-1">
+                    <a class="nav-link text-white fw-medium" href="#home">Home</a>
+                </li>
+                <li class="nav-item mx-1">
+                    <a class="nav-link text-white fw-medium" href="#features">Features</a>
+                </li>
+                <li class="nav-item mx-1">
+                    <a class="nav-link text-white fw-medium" href="#testimonials">Testimonials</a>
+                </li>
+                <li class="nav-item mx-1">
+                    <a class="nav-link text-white fw-medium" href="#contact">Contact</a>
+                </li>
+                <li class="nav-item mx-1 d-lg-none mt-2">
+                    <a class="btn btn-light w-100 fw-medium" href="/accounts/login/">
+                        <i class="bi bi-box-arrow-in-right me-1"></i>Login
+                    </a>
+                </li>
+            </ul>
+
+            <!-- Desktop login button -->
+            <div class="d-none d-lg-flex ms-3">
+                <a class="btn btn-light fw-medium px-4" href="/accounts/login/">
+                    <i class="bi bi-box-arrow-in-right me-1"></i>Login
+                </a>
+            </div>
+        </div>
+    </div>
+</nav>
+{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section id="home" class="hero-section text-white">
+    <div class="container-fluid">
+        <div class="row align-items-center">
+            <div class="col-lg-6 col-md-12 mb-4 mb-lg-0 mobile-center">
+                <h1 class="display-4 fw-bold mb-4 animate__animated animate__fadeInUp" data-aos="fade-up">
+                    Transform Your School with Digital Excellence
+                </h1>
+                <p class="lead mb-4 animate__animated animate__fadeInUp animate__delay-1s" data-aos="fade-up" data-aos-delay="150">
+                    Comprehensive school management platform designed to streamline operations,
+                    enhance communication, and improve educational outcomes for institutions of all sizes.
+                </p>
+                <div class="d-flex flex-wrap gap-3 animate__animated animate__fadeInUp animate__delay-2s" data-aos="fade-up" data-aos-delay="300">
+                    <a href="/accounts/register/" class="btn btn-light btn-responsive fw-bold py-3">
+                        <i class="bi bi-rocket-takeoff me-2"></i>Start Free Trial
+                    </a>
+                    <a href="#features" class="btn btn-outline-light btn-responsive fw-bold py-3">
+                        <i class="bi bi-play-circle me-2"></i>Watch Demo
+                    </a>
+                </div>
+                <div class="mt-4 d-flex flex-wrap align-items-center mobile-center">
+                    <div class="me-4 mb-2">
+                        <i class="bi bi-check-circle-fill text-success me-1"></i>
+                        <span>No credit card required</span>
+                    </div>
+                    <div class="mb-2">
+                        <i class="bi bi-check-circle-fill text-success me-1"></i>
+                        <span>14-day free trial</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-12">
+                <div class="position-relative">
+                    <div class="ratio ratio-16x9 rounded-4 shadow-lg overflow-hidden">
+                        <div class="bg-dark d-flex align-items-center justify-content-center">
+                            <i class="bi bi-laptop text-white" style="font-size: 8rem;"></i>
+                        </div>
+                    </div>
+                    <!-- Floating badges -->
+                    <div class="position-absolute top-0 start-0 translate-middle bg-white rounded-circle shadow d-none d-md-flex align-items-center justify-content-center"
+                        style="width: 60px; height: 60px;">
+                        <i class="bi bi-shield-check text-primary fs-4"></i>
+                    </div>
+                    <div class="position-absolute bottom-0 end-0 translate-middle bg-white rounded-circle shadow d-none d-md-flex align-items-center justify-content-center"
+                        style="width: 60px; height: 60px;">
+                        <i class="bi bi-lightning text-primary fs-4"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Features Section -->
+<section id="features" class="section-padding bg-light">
+    <div class="container-fluid">
+        <div class="text-center mb-5">
+            <span class="badge bg-primary rounded-pill px-3 py-2 mb-3">FEATURES</span>
+            <h2 class="fw-bold mb-3">Everything You Need in One Platform</h2>
+            <p class="text-muted lead mx-auto" style="max-width: 700px;">
+                Designed to meet the needs of modern educational institutions
+            </p>
+        </div>
+
+        <div class="row g-4">
+            <!-- Feature 1 -->
+            <div class="col-xl-4 col-lg-6 col-md-6">
+                <div class="card feature-card border-0 h-100" data-aos="fade-up">
+                    <div class="card-body p-4">
+                        <div class="feature-icon text-primary mb-3">
+                            <i class="bi bi-people-fill"></i>
+                        </div>
+                        <h4 class="card-title fw-bold mb-3">Student Management</h4>
+                        <p class="card-text text-muted mb-4">
+                            Comprehensive student profiles, attendance tracking, performance analytics,
+                            and progress monitoring all in one place.
+                        </p>
+                        <ul class="list-unstyled">
+                            <li class="mb-2"><i class="bi bi-check-circle-fill text-success me-2"></i>Digital report
+                                cards</li>
+                            <li class="mb-2"><i class="bi bi-check-circle-fill text-success me-2"></i>Attendance
+                                automation</li>
+                            <li><i class="bi bi-check-circle-fill text-success me-2"></i>Progress tracking</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Feature 2 -->
+            <div class="col-xl-4 col-lg-6 col-md-6">
+                <div class="card feature-card border-0 h-100" data-aos="fade-up" data-aos-delay="100">
+                    <div class="card-body p-4">
+                        <div class="feature-icon text-primary mb-3">
+                            <i class="bi bi-person-badge"></i>
+                        </div>
+                        <h4 class="card-title fw-bold mb-3">Teacher Portal</h4>
+                        <p class="card-text text-muted mb-4">
+                            Streamlined tools for lesson planning, grade management, assignment distribution,
+                            and parent-teacher communication.
+                        </p>
+                        <ul class="list-unstyled">
+                            <li class="mb-2"><i class="bi bi-check-circle-fill text-success me-2"></i>Gradebook
+                                management</li>
+                            <li class="mb-2"><i class="bi bi-check-circle-fill text-success me-2"></i>Lesson planning
+                            </li>
+                            <li><i class="bi bi-check-circle-fill text-success me-2"></i>Communication tools</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Feature 3 -->
+            <div class="col-xl-4 col-lg-6 col-md-6">
+                <div class="card feature-card border-0 h-100" data-aos="fade-up" data-aos-delay="200">
+                    <div class="card-body p-4">
+                        <div class="feature-icon text-primary mb-3">
+                            <i class="bi bi-graph-up"></i>
+                        </div>
+                        <h4 class="card-title fw-bold mb-3">Analytics Dashboard</h4>
+                        <p class="card-text text-muted mb-4">
+                            Real-time insights and comprehensive reporting to make data-driven decisions
+                            for school improvement and resource allocation.
+                        </p>
+                        <ul class="list-unstyled">
+                            <li class="mb-2"><i class="bi bi-check-circle-fill text-success me-2"></i>Performance
+                                analytics</li>
+                            <li class="mb-2"><i class="bi bi-check-circle-fill text-success me-2"></i>Attendance reports
+                            </li>
+                            <li><i class="bi bi-check-circle-fill text-success me-2"></i>Resource tracking</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Feature 4 -->
+            <div class="col-xl-4 col-lg-6 col-md-6">
+                <div class="card feature-card border-0 h-100" data-aos="fade-up" data-aos-delay="300">
+                    <div class="card-body p-4">
+                        <div class="feature-icon text-primary mb-3">
+                            <i class="bi bi-calendar-check"></i>
+                        </div>
+                        <h4 class="card-title fw-bold mb-3">Attendance System</h4>
+                        <p class="card-text text-muted mb-4">
+                            Automated attendance tracking with facial recognition, RFID integration,
+                            and real-time notifications for parents and staff.
+                        </p>
+                        <ul class="list-unstyled">
+                            <li class="mb-2"><i class="bi bi-check-circle-fill text-success me-2"></i>RFID integration
+                            </li>
+                            <li class="mb-2"><i class="bi bi-check-circle-fill text-success me-2"></i>Real-time alerts
+                            </li>
+                            <li><i class="bi bi-check-circle-fill text-success me-2"></i>Detailed reports</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Feature 5 -->
+            <div class="col-xl-4 col-lg-6 col-md-6">
+                <div class="card feature-card border-0 h-100" data-aos="fade-up" data-aos-delay="400">
+                    <div class="card-body p-4">
+                        <div class="feature-icon text-primary mb-3">
+                            <i class="bi bi-chat-dots"></i>
+                        </div>
+                        <h4 class="card-title fw-bold mb-3">Parent Communication</h4>
+                        <p class="card-text text-muted mb-4">
+                            Seamless communication platform connecting parents with teachers,
+                            administrators, and their child's academic progress.
+                        </p>
+                        <ul class="list-unstyled">
+                            <li class="mb-2"><i class="bi bi-check-circle-fill text-success me-2"></i>Push notifications
+                            </li>
+                            <li class="mb-2"><i class="bi bi-check-circle-fill text-success me-2"></i>Progress updates
+                            </li>
+                            <li><i class="bi bi-check-circle-fill text-success me-2"></i>Event reminders</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Feature 6 -->
+            <div class="col-xl-4 col-lg-6 col-md-6">
+                <div class="card feature-card border-0 h-100" data-aos="fade-up" data-aos-delay="500">
+                    <div class="card-body p-4">
+                        <div class="feature-icon text-primary mb-3">
+                            <i class="bi bi-phone"></i>
+                        </div>
+                        <h4 class="card-title fw-bold mb-3">Mobile App</h4>
+                        <p class="card-text text-muted mb-4">
+                            Native mobile applications for iOS and Android, allowing access to all
+                            features on-the-go for students, parents, and teachers.
+                        </p>
+                        <ul class="list-unstyled">
+                            <li class="mb-2"><i class="bi bi-check-circle-fill text-success me-2"></i>iOS & Android apps
+                            </li>
+                            <li class="mb-2"><i class="bi bi-check-circle-fill text-success me-2"></i>Offline access
+                            </li>
+                            <li><i class="bi bi-check-circle-fill text-success me-2"></i>Push notifications</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section class="section-padding bg-primary text-white">
+    <div class="container-fluid text-center">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <h2 class="display-5 fw-bold mb-4">Ready to Modernize Your School?</h2>
+                <p class="lead mb-5">
+                    Join over 500 schools that have transformed their operations with our platform.
+                    Start your free trial today – no credit card required.
+                </p>
+                <div class="d-flex flex-column flex-md-row justify-content-center gap-3">
+                    <a href="/accounts/register/" class="btn btn-light btn-lg px-5 py-3 fw-bold">
+                        <i class="bi bi-rocket-takeoff me-2"></i>Start Free Trial
+                    </a>
+                    <a href="#contact" class="btn btn-outline-light btn-lg px-5 py-3 fw-bold">
+                        <i class="bi bi-calendar-check me-2"></i>Schedule Demo
+                    </a>
+                </div>
+                <p class="mt-4 small opacity-75">
+                    <i class="bi bi-shield-check me-1"></i>Secure & compliant •
+                    <i class="bi bi-headset me-1 ms-3"></i>24/7 support •
+                    <i class="bi bi-cloud-check me-1 ms-3"></i>99.9% uptime
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<!-- AOS JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+
+<script>
+    // Responsive navigation behavior
+    document.addEventListener('DOMContentLoaded', function () {
+        // Init AOS (Animate On Scroll)
+        if (window.AOS) {
+            AOS.init({ duration: 800, once: true });
+        }
+        // Close mobile menu when clicking a link
+        const navLinks = document.querySelectorAll('.nav-link');
+        const navbarCollapse = document.querySelector('.navbar-collapse');
+
+        navLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                if (window.innerWidth < 992) {
+                    const bsCollapse = new bootstrap.Collapse(navbarCollapse);
+                    bsCollapse.hide();
+                }
+            });
+        });
+
+        // Smooth scrolling with offset for fixed navbar
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    const navbarHeight = document.querySelector('.navbar').offsetHeight;
+                    const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset - navbarHeight;
+
+                    window.scrollTo({
+                        top: targetPosition,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Add animation on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate__animated', 'animate__fadeInUp');
+                }
+            });
+        }, observerOptions);
+
+        // Observe feature cards
+        document.querySelectorAll('.feature-card').forEach(card => {
+            observer.observe(card);
+        });
+
+        // Touch device detection
+        const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+        if (isTouchDevice) {
+            document.body.classList.add('touch-device');
+        }
+    });
+
+    // Responsive image loading
+    window.addEventListener('resize', function () {
+        // Handle responsive behaviors on resize
+        const navbar = document.querySelector('.navbar-collapse');
+        if (window.innerWidth >= 992 && navbar.classList.contains('show')) {
+            navbar.classList.remove('show');
+        }
+    });
+</script>
+
+<!-- Responsive meta tags -->
+<meta name="theme-color" content="#4361ee">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+{% endblock %}
