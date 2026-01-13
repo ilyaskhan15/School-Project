@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'students',
     'rest_framework',
     'bootstrap5',
+    'classes',
     
     'django.contrib.admin',
     'django.contrib.auth',
