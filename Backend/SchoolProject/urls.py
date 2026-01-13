@@ -23,6 +23,7 @@ from django.conf.urls.static import static
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/', include('accounts.urls')),
+    path('api/', include('students.urls')),
     
     #Landing Page  as home
     path('', TemplateView.as_view(template_name='public/landing.html'), name='home')
