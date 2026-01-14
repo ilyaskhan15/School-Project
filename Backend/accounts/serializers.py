@@ -1,51 +1,66 @@
-# accounts/serializers.py
+from django.contrib.auth import authenticate, get_user_model
 from rest_framework import serializers
-from django.contrib.auth.hashers import make_password
-from .models import User
 
-class UserSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = User
-        fields = ['id', 'email', 'first_name', 'last_name', 
-                  'phone_number', 'date_of_birth', 'date_joined']
-        read_only_fields = ['id', 'date_joined']
+User = get_user_model()
+
 
 class RegisterSerializer(serializers.ModelSerializer):
-    password = serializers.CharField(write_only=True, min_length=6)
-    password2 = serializers.CharField(write_only=True, min_length=6)
+    password = serializers.CharField(write_only=True, min_length=8)
     
     class Meta:
         model = User
-        fields = ['email', 'first_name', 'last_name', 
-                  'password', 'password2', 'phone_number', 'date_of_birth']
-    
-    def validate(self, data):
-        # Check if passwords match
-        if data['password'] != data['password2']:
-            raise serializers.ValidationError({"password": "Passwords don't match"})
+        fields = [
+            "email",
+            "username",
+            "password",
+            "first_name",
+            "last_name",
+            "phone_number",
+            "date_of_birth",
+        ]
         
-        # Check if email already exists
-        if User.objects.filter(email=data['email']).exists():
-            raise serializers.ValidationError({"email": "Email already registered"})
-        
-        return data
-    
     def create(self, validated_data):
-        # Remove password2 from validated data
-        validated_data.pop('password2')
-        
-        # Create user
-        user = User.objects.create(
-            email=validated_data['email'],
-            first_name=validated_data['first_name'],
-            last_name=validated_data['last_name'],
-            phone_number=validated_data.get('phone_number'),
-            date_of_birth=validated_data.get('date_of_birth'),
-            is_active=True
-        )
-        
-        # Set password (hashed)
-        user.set_password(validated_data['password'])
+        password = validated_data.pop("password")
+        user = User(**validated_data)
+        user.set_password(password)
         user.save()
-        
         return user
+    
+    
+from django.contrib.auth import authenticate
+from rest_framework import serializers
+
+
+class LoginSerializer(serializers.Serializer):
+    email = serializers.EmailField()
+    password = serializers.CharField(write_only=True)
+
+    def validate(self, data):
+        user = authenticate(
+            username=data["email"],  # ✅ IMPORTANT
+            password=data["password"]
+        )
+
+        if not user:
+            raise serializers.ValidationError("Invalid email or password")
+
+        if not user.is_active:
+            raise serializers.ValidationError("User account is disabled")
+
+        data["user"] = user
+        return data
+
+    
+class UserProfileSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = [
+            "id",
+            "email",
+            "username",
+            "first_name",
+            "last_name",
+            "phone_number",
+            "date_of_birth",
+            "is_staff"
+        ]
