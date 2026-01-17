@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/6.0/ref/settings/
 from pathlib import Path
 import os
 from decouple import config
+from datetime import timedelta
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -43,9 +44,11 @@ INSTALLED_APPS = [
     'accounts',
     'teachers',
     'students',
-    'rest_framework',
-    'bootstrap5',
     'classes',
+    
+    'bootstrap5',
+    'rest_framework',
+    'rest_framework.authtoken',
     
     'django.contrib.admin',
     'django.contrib.auth',
@@ -145,3 +148,25 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+
+
+#JWT AUTHENTICATION
+
+REST_FRAMEWORK = {
+    "DEFAULT_AUTHENTICATION_CLASSES": (
+        "rest_framework_simplejwt.authentication.JWTAuthentication",
+    ),
+    "DEFAULT_PERMISSION_CLASSES": (
+        "rest_framework.permissions.IsAuthenticated",
+    ),
+}
+
+
+SIMPLE_JWT = {
+    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=5),
+    "REFRESH_TOKEN_LIFETIME": timedelta(days=1),
+
+    "AUTH_HEADER_TYPES": ("Bearer",),
+
+    "AUTH_TOKEN_CLASSES": ("rest_framework_simplejwt.tokens.AccessToken",),
+}
