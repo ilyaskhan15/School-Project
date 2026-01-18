@@ -1,3 +1,5 @@
+from typing import Any, TypedDict, cast
+
 from django.contrib.auth import login, logout
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -9,6 +11,12 @@ from .serializers import (
     LoginSerializer,
     UserProfileSerializer
 )
+
+
+class LoginData(TypedDict):
+    user: Any
+    access: str
+    refresh: str
 
 
 class RegisterView(APIView):
@@ -35,16 +43,24 @@ class LoginView(APIView):
         serializer = LoginSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
 
-        user = serializer.validated_data["user"] #type: ignore
-        login(request, user)
+        data = cast(LoginData, serializer.validated_data)
+
+        user = data["user"]
+        access = data["access"]
+        refresh = data["refresh"]
 
         return Response(
             {
                 "message": "Login successful",
+                "tokens": {
+                    "access": access,
+                    "refresh": refresh,
+                },
                 "user": UserProfileSerializer(user).data,
             },
             status=status.HTTP_200_OK,
         )
+
 
 
 class ProfileView(APIView):
