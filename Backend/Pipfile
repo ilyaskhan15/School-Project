@@ -12,6 +12,7 @@ djangorestframework = "*"
 django-bootstrap-v5 = "*"
 djangorestframework-simplejwt = "*"
 django-debug-toolbar = "*"
+django-cors-headers = "*"
 
 [dev-packages]
 
